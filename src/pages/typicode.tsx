@@ -2,10 +2,11 @@ import { useAPI } from '../hooks/useApi';
 import type { Todo } from '@/types/todo';
 
 const Todos = () => {
-  const todos = useAPI<Todo[]>('https://jsonplaceholder.typicode.com/todos?_limit=5');
+  const { data: todos, loading } = useAPI<Todo[]>('https://jsonplaceholder.typicode.com/todos?_limit=5');
 
-  if (!todos) return <p>Loading...</p>;
+  if (loading) return <p>Loading...</p>;
 
+  if (!todos) return <p>No todos found</p>;
   return (
     <ul>
       {todos.map((todo) => (
